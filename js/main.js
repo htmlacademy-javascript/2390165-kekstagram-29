@@ -16,7 +16,7 @@ const myObj = {
 };
 
 /**
- * 1. Функция генерации случайного целого положительного уникального числа
+ * 1.1 Функция генерации случайного целого положительного уникального числа
  * в заданных пределах
  * */
 const getRandomInteger = function (a, b) {
@@ -27,7 +27,7 @@ const getRandomInteger = function (a, b) {
 };
 
 /**
- * 2. Функция генерирует рандомный уникальный id в диапазоне от 1 до 25 включительно
+ * 1.2. Функция генерирует рандомный уникальный id в диапазоне от 1 до 25 включительно
  */
 const createRandomIdGenerator = (min, max) =>{
   const counter = [];
@@ -45,16 +45,25 @@ const createRandomIdGenerator = (min, max) =>{
   };
 };
 const createPhotoId = createRandomIdGenerator(1,25);
+const createUrlId = createRandomIdGenerator(1,25);
 
+/**
+ * 2. Функция генерирует url
+ */
+const generateUrl = () => {
+  const photoDir = 'photos/';
+  return (`${photoDir}${createUrlId()}`);
+};
 
 /**
  * Создает объект с заданной структурой
  */
-const createPhotoDescripton = () => ({
-  id: createPhotoId(),
-  url: 'fdfs',
-  description: 'sdfd',
-  likes: 'dsf',
+const createPhotoDescripton = () =>
+  ({
+    id: createPhotoId(),
+    url: generateUrl(),
+    description: 'sdfd',
+    likes: 'dsf',
   // comments: [{
   //   id: '',
   //   avatar: '',
@@ -62,6 +71,7 @@ const createPhotoDescripton = () => ({
   //   name: ''
   // }]
 });
+
   // console.log(createPhotoDescripton());
 
 
