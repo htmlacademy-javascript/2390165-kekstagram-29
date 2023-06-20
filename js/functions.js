@@ -1,43 +1,36 @@
 //Функция для проверки длины строки
-function testString(string, max) {
+function testStringLength(string, max) {
   string = String(string);
   string = string.replaceAll(' ', '');
-  // console.log(string);
-  // console.log(string.length);
-  // console.log(string.length <= max);
   return (string.length <= max);
 }
-testString('проверяемая строка', 17);
+testStringLength('проверяемая строка', 17);
 
-// Полиндром
-function poly(string) {
+// Палиндром
+function isPalindrome(string) {
   string = string.toLowerCase().replaceAll(' ', '');
   let word = '';
   for (let i = string.length - 1; i >= 0; i--) {
     word += string[i];
   }
-  // console.log(word);
-  // console.log(string === word);
   return (string === word);
 }
-poly('Лёша на полке клопа нашёл');
+isPalindrome('Лёша на полке клопа нашёл');
 
 //Дополнительная функция
-function fn(str) {
+function getNumbersFromString(str) {
   str = String(str);
   let word = '';
   for (let i = 0; i < str.length; i++) {
-    if (!isNaN(str[i])) {
+    if (!Number.isNaN(parseInt(str[i], 10))) {
       word += str[i];
     }
   }
-  word = word.replaceAll(' ', '');
-  // console.log('word', Math.abs(word));
-  return ('word', Math.abs(word));
+  return +word;
 }
 
-fn('1 кефир, 0.5 батона');
-fn('агент 007');
-fn(-1);
+getNumbersFromString('1 кефир, 0.5 батона');
+getNumbersFromString('агент 007');
+getNumbersFromString(-1);
 
 
