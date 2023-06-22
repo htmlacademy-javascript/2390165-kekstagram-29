@@ -1,4 +1,4 @@
-const DESCRIPTION = [
+const DESCRIPTIONS = [
   'белый попугай',
   'лес зимой',
   'лес летом',
@@ -25,6 +25,7 @@ const DESCRIPTION = [
   'мост Дворцовый',
   'мост Литейный',
 ];
+// console.log(DESCRIPTIONS);
 
 const COMMENTS_MESSAGE = [
   'В целом всё неплохо. Но не всё',
@@ -54,9 +55,9 @@ const AUTHOR_COMMENTS_NAMES = [
  * в заданных пределах
  * */
 const getRandomInteger = function (a, b) {
-  const lower = Math.ceil(Math.min(a, b));
-  const upper = Math.floor(Math.max(a, b));
-  const result = Math.random() * (upper - lower + 1) + lower;
+  // const lower = Math.ceil(Math.min(a, b));
+  // const upper = Math.floor(Math.max(a, b));
+  const result = Math.random() * (a - b + 1) + b;
   return Math.floor(result);
 };
 
@@ -95,7 +96,7 @@ const generateUrl = () => {
 /**
  * 1.3. Функция генерирует description
  */
-const createDescription = () => photoId === 25 ? DESCRIPTION[0] : DESCRIPTION[photoId];
+const createDescription = () => DESCRIPTIONS[photoId - 1];
 
 /**
  * 1.4. Функция генерирует лайки от 15 до 200
@@ -156,7 +157,7 @@ const createCommentsArray = () => {
  * 4. ИТОГО. Создаем готовый объект с заданной структурой
  */
 //4.1 Функция собирает образец объекта
-const createPhotoDescripton = () =>
+const createPhoto = () =>
   ({
     id: createPhotoId(),
     url: generateUrl(),
@@ -166,5 +167,6 @@ const createPhotoDescripton = () =>
   });
 
 //4.2 Функция создает 25 вариантов собранного образца
-const PhotoDescripton = Array.from({length:25}, createPhotoDescripton);
-console.log(PhotoDescripton);
+const createPhotoArray = (length = 20) => Array.from({length}, createPhoto);
+// console.log(PhotoDescripton);
+createPhotoArray ();
