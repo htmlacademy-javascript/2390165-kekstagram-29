@@ -1,4 +1,4 @@
-import { createRandomIdGenerator, getRandomInteger, createIdGenerator} from './utils.js';
+import { createRandomIdGenerator, getRandomInteger, createIdGenerator } from './utils.js';
 
 // import * as util from './util.js';
 
@@ -93,46 +93,37 @@ const createAuthorCommentsName = () => {
   const namesIndex = getRandomInteger(0, AUTHOR_COMMENTS_NAMES.length - 1);
   return AUTHOR_COMMENTS_NAMES[namesIndex];
 };
-
-
-
 // 3. СБОРКА ОБЪЕКТА КОММЕНТОВ
 const createCommetnsId = createIdGenerator();
 
 // 3.1 Функция собирает образец объекта Комментарии с заданной структурой
 const createComments = () =>
-({
-  id: createCommetnsId(),
-  avatar: createAvatarDir(),
-  message: createMessageGenerator(),
-  name: createAuthorCommentsName()
-});
+  ({
+    id: createCommetnsId(),
+    avatar: createAvatarDir(),
+    message: createMessageGenerator(),
+    name: createAuthorCommentsName()
+  });
 
 //  3.2 Функция создает массив с рандомным числом комментариев
 const createCommentsArray = () => {
   const commentsAmount = getRandomInteger(0, 30);
   return Array.from({ length: commentsAmount }, createComments);
 };
-
-
-
-
 // 4. ИТОГО. Создаем готовый объект с заданной структурой
 
 //4.1 Функция собирает образец объекта
 const createPhoto = () =>
-({
-  id: createPhotoId(),
-  url: generateUrl(),
-  description: createDescription(),
-  likes: createLikes(),
-  comments: createCommentsArray()
-});
+  ({
+    id: createPhotoId(),
+    url: generateUrl(),
+    description: createDescription(),
+    likes: createLikes(),
+    comments: createCommentsArray()
+  });
 
 //4.2 Функция создает 25 вариантов собранного образца
 const createPhotoArray = (length = 20) => Array.from({ length }, createPhoto);
 // console.log(PhotoDescripton);
-
-
 
 export default createPhotoArray;
