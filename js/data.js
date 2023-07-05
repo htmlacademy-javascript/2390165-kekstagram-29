@@ -58,84 +58,45 @@ const AUTHOR_COMMENTS_NAMES = [
   'Белый медведь'
 ];
 
-//модуль, который создаёт данные
-// const createPhotoId = createRandomIdGenerator(1, 25);
-// const createUrlId = createRandomIdGenerator(1, 25); Удаляю
-
-/** РЕФАЧУ!!
- * 1.2. Функция генерирует url
- * Удаляю. Будет работать на месте
- */
-// const generateUrl = () => {
-//   const photoDir = 'photos/';
-//   return (`${photoDir}${createUrlId()}`);
-// };
-
-/** РЕФАЧЕНА 04.07
- * 1.3. Функция генерирует description
- * // Удалена, создается на месте
- */
-
-
-/** Готово!!
- * Удалено!! генерурует на месте
- * 1.4. Функция генерирует лайки от 15 до 200
- */
-// const createLikes = () => getRandomInteger(15, 200);
-
-//2.2 Оставил!!! работает!!
-//Функция генерирует путь к аватарке
+////Функция генерирует путь к аватарке
 /*
 img/avatar-{{случайное число от 1 до 6}}.svg.
 Аватарки подготовлены в директории img.*/
 const createAvatarDir = () => (`img/avatar${getRandomInteger(1, 6)}.svg`);
 
-//2.3 Функция генерирует текст комментария
-// const createMessageGenerator = () => {
-//   const randomIndexMessage = getRandomInteger(0, COMMENTS_MESSAGE.length - 1);
-//   return COMMENTS_MESSAGE[randomIndexMessage];
-// };
+// 1. СБОРКА ОБЪЕКТА КОММЕНТОВ
+const createCommetnsId = createIdGenerator();
 
-// //2.4 Функция генерирует имена авторов комменариев
-// const createAuthorCommentsName = () => {
-//   const namesIndex = getRandomInteger(0, AUTHOR_COMMENTS_NAMES.length - 1);
-//   return AUTHOR_COMMENTS_NAMES[namesIndex];
-// };
-// 3. СБОРКА ОБЪЕКТА КОММЕНТОВ
-const createCommetnsId = createIdGenerator(); // Оставил Готово!! здесь замыкание
-
-// 3.1 Функция собирает образец объекта Комментарии с заданной структурой
-//РЕФАЧЕНА 04.07
+// 1.1 Функция собирает образец объекта Комментарии с заданной структурой
 function createComments() {
-  const id = createCommetnsId();       //Готово!
-  const avatar = createAvatarDir();  //Готово!!
-  const message = getRandomValueFromArray(COMMENTS_MESSAGE);  //Готово!
-  const name = getRandomValueFromArray(AUTHOR_COMMENTS_NAMES); //Готово!
+  const id = createCommetnsId();
+  const avatar = createAvatarDir();
+  const message = getRandomValueFromArray(COMMENTS_MESSAGE);
+  const name = getRandomValueFromArray(AUTHOR_COMMENTS_NAMES);
 
   return { id, avatar, message, name };
 }
 
-//  3.2 Функция создает массив с рандомным числом комментариев
+//  1.2 Функция создает массив с рандомным числом комментариев
 function createCommentsArray() {
   const commentsAmount = getRandomInteger(0, 30);
   const items = new Array(commentsAmount).fill('');
-  // return Array.from({ length: commentsAmount }, createComments);
-  return items.map(createComments);  // будет работать!!
-}
-// 4. ИТОГО. Создаем готовый объект с заданной структурой
 
-//4.1 Функция собирает образец объекта
+  return items.map(createComments);
+}
+// 2. ИТОГО. Создаем готовый объект с заданной структурой
+
+//2.1 Функция собирает образец объекта
 function createPhoto(id) {
-  // const id = createPhotoId();  Готово
-  const url = (`photos/${id}`);               //Готово!!
-  const description = getRandomValueFromArray(DESCRIPTIONS);  //Готово!!
-  const likes = getRandomInteger(15, 200);               //Готово!!
-  const comments = createCommentsArray();  //Готово!!
+  const url = (`photos/${id}.jpg`);
+  const description = getRandomValueFromArray(DESCRIPTIONS);
+  const likes = getRandomInteger(15, 200);
+  const comments = createCommentsArray();
 
   return { id, url, description, likes, comments };
 }
 
-//4.2 Готово!!
+//2.2
 //Функция создает 25 вариантов собранного образца
 // const createPhotoArray = (length = 20) => Array.from({ length }, createPhoto);
 //Новый крутейший способ с помощью new Array  и дальнейшего map
