@@ -7,34 +7,86 @@ console.log(thumbnails);
 //ищу большое изображение
 const popup = document.querySelector('.big-picture');
 
-//пишу отдельно коллбэк. Что он умеет?
-// убирает класс hidden у  big-picture
-// добавляет нужный url для картинки внутри big-picture
 /**
+ * Отрисовывает большую картинку (popup)
  * @param {Picture} data
  */
 function renderPopup(data) {
   popup.querySelector('.big-picture__img img').setAttribute('src', data.url);
   popup.querySelector('.big-picture__img img').setAttribute('alt', data.description);
-  popup.querySelector('.comments-count').textContent = data.comments.length;
-  popup.querySelector('.likes-count').textContent = data.likes;
+  popup.querySelector('.comments-count:last-child').textContent = String(data.comments.length);
+  popup.querySelector('.likes-count').textContent = String(data.likes);
+  popup.querySelector('.social__caption').textContent = String(data.description);
 
+
+
+  showPopup(popup); //Ф1
+  // onCancelButtonClick(popup);  // у академии лежит внутри Ф1
+  // onDocumentKeydown(popup); //// у академии лежит внутри Ф1
+  popup.querySelector('.cancel').addEventListener('click', onCancelButtonClick);
+  document.addEventListener('keydown', onDocumentKeydown);
+}
+
+/**
+ * Показывает всплывающее окно popup
+ * @param {Element} popup
+ */
+function showPopup(popup) {
   popup.classList.remove('hidden');
-}
-// function onClick
-
-//Функция которая зкрывает по крестику
-function closePopup() {
-  popup.querySelector('.big-picture__cancel')
-    .addEventListener('click', () => popup.classList.add('hidden'));
-
-  document.addEventListener('keydown', (event) => {
-    if (event.key.startsWith('Esc')) {
-      popup.classList.add('hidden');
-    }
-  });
-
+  document.body.classList.add('modal-open');
+  popup.querySelector('.social__comment-count').classList.add('hidden');
+  popup.querySelector('.comments-loader').classList.add('hidden');
 }
 
+/**
+ * Прячет всплывающее окно popup
+ * @param {Element} popup
+ */
+function hidePopup(popup) {
+  popup.classList.add('hidden');
+  document.body.classList.remove('modal-open');
 
-export { renderPopup as openPopup, closePopup };
+  popup.querySelector('.cancel').removeEventListener('click', onCancelButtonClick);
+  document.removeEventListener('keydown', onDocumentKeydown);
+}
+
+// /**
+//  * Прячет переданный в нее popup по 'Esc'
+//  * @param {Element} popup
+//  */
+// function onDocumentKeydown(popup) {
+//   document.addEventListener('keydown', (event) => {
+//     if (event.key.startsWith('Esc')) {
+//       hidePopup(popup);
+
+//     }
+//   });
+// }
+
+/**
+//  * cb для EventListener. Прячет popup по 'Esc'
+//  * @param {KeyboardEvent} event
+//  */
+function onDocumentKeydown(event) {
+  event.preventDefault();
+  if (event.key.startsWith('Esc')) {
+    hidePopup(popup);
+  }
+}
+
+// /**
+//  * Прячет переданный popup кнопкой cancel
+//  * @param {Element} popup
+//  */
+// function onCancelButtonClick(popup) {
+//   popup.querySelector('.cancel').addEventListener('click', () => {
+//     hidePopup(popup);
+//   });
+
+// }
+function onCancelButtonClick() {
+  hidePopup(popup);
+}
+
+
+export { renderPopup };

@@ -1,10 +1,15 @@
-import { openPopup } from './popup.js';
+import { renderPopup } from './popup.js';
 
+/**
+ * Заготовка для одного элемента миниатюры в галереи
+ * @type {HTMLTemplateElement}
+ */
 const pictureTemplate = document.querySelector('#picture');
 const gallery = document.querySelector('.pictures');
 /**
  * Клонирует template, настраивает поля
- *
+ * @param {Picture} data
+ * @returns {HTMLAnchorElement}
  */
 function createPicture(data) {
   const pictureClone =
@@ -22,10 +27,8 @@ function createPicture(data) {
   // обработчик клика на эту картинку
   pictureClone.addEventListener('click', (event) => {
     event.preventDefault();
-    openPopup(data);
-    // console.log(data);
+    renderPopup(data);
   });
-
 
   return pictureClone;
 }
@@ -39,6 +42,10 @@ function createPicture(data) {
 // }
 
 // Современный способ БЕЗ for:
+/**
+ * Отрисовывает галерею миниатюрами
+ * @param {Array<Picture>} data
+ */
 function renderGallery(data) {
   //максималити продвинуто в одну строку:
   gallery.append(...data.map(createPicture));
