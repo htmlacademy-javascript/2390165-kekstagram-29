@@ -1,8 +1,9 @@
 // Модуль - точка входа
-// import './util.js';
 import createPhotoArray from './data.js';
 import {renderGallery} from './galleryRender.js';
+import {closePopup} from './popup.js';
 
-// console.log(createPhotoArray());
 renderGallery(createPhotoArray());
+// mapData(createPhotoArray());
+closePopup();
 

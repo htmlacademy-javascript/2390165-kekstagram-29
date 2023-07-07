@@ -1,8 +1,4 @@
-// import {
-//   createDescription,
-//   createLikes,
-//   createCommentsArray,
-// } from './data.js';
+import { openPopup } from './popup.js';
 
 const pictureTemplate = document.querySelector('#picture');
 const gallery = document.querySelector('.pictures');
@@ -21,6 +17,15 @@ function createPicture(data) {
   picturePhoto.setAttribute('alt', data.description);
   pictureLikes.textContent = String(data.likes);
   pictureComments.textContent = String(data.comments.length);
+
+  // кладу в миниатюру методы
+  // обработчик клика на эту картинку
+  pictureClone.addEventListener('click', (event) => {
+    event.preventDefault();
+    openPopup(data);
+    // console.log(data);
+  });
+
 
   return pictureClone;
 }
@@ -44,9 +49,7 @@ function renderGallery(data) {
   //еще проще и еще понятнее:
   // const refinedPicture = data.map((value) => createPicture(value));
   // gallery.append(...refinedPicture);
-
-
 }
 
-export {renderGallery};
+export { renderGallery };
 
