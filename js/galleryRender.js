@@ -1,14 +1,15 @@
-// import {
-//   createDescription,
-//   createLikes,
-//   createCommentsArray,
-// } from './data.js';
+import { renderPopup } from './popup.js';
 
+/**
+ * Заготовка для одного элемента миниатюры в галереи
+ * @type {HTMLTemplateElement}
+ */
 const pictureTemplate = document.querySelector('#picture');
 const gallery = document.querySelector('.pictures');
 /**
  * Клонирует template, настраивает поля
- *
+ * @param {Picture} data
+ * @returns {HTMLAnchorElement}
  */
 function createPicture(data) {
   const pictureClone =
@@ -22,6 +23,13 @@ function createPicture(data) {
   pictureLikes.textContent = String(data.likes);
   pictureComments.textContent = String(data.comments.length);
 
+  // кладу в миниатюру методы
+  // обработчик клика на эту картинку
+  pictureClone.addEventListener('click', (event) => {
+    event.preventDefault();
+    renderPopup(data);
+  });
+
   return pictureClone;
 }
 
@@ -34,6 +42,10 @@ function createPicture(data) {
 // }
 
 // Современный способ БЕЗ for:
+/**
+ * Отрисовывает галерею миниатюрами
+ * @param {Array<Picture>} data
+ */
 function renderGallery(data) {
   //максималити продвинуто в одну строку:
   gallery.append(...data.map(createPicture));
@@ -44,9 +56,7 @@ function renderGallery(data) {
   //еще проще и еще понятнее:
   // const refinedPicture = data.map((value) => createPicture(value));
   // gallery.append(...refinedPicture);
-
-
 }
 
-export {renderGallery};
+export { renderGallery };
 

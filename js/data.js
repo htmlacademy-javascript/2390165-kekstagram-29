@@ -67,7 +67,11 @@ const createAvatarDir = () => (`img/avatar${getRandomInteger(1, 6)}.svg`);
 // 1. СБОРКА ОБЪЕКТА КОММЕНТОВ
 const createCommetnsId = createIdGenerator();
 
-// 1.1 Функция собирает образец объекта Комментарии с заданной структурой
+// 1.1
+/**
+ *Функция собирает образец объекта Комментарии с заданной структурой
+ * @returns {PictureComment}
+ */
 function createComments() {
   const id = createCommetnsId();
   const avatar = createAvatarDir();
@@ -77,7 +81,11 @@ function createComments() {
   return { id, avatar, message, name };
 }
 
-//  1.2 Функция создает массив с рандомным числом комментариев
+//  1.2
+/**
+ * Функция создает массив с рандомным числом комментариев
+ * @returns {Array<PictureComment>}
+ */
 function createCommentsArray() {
   const commentsAmount = getRandomInteger(0, 30);
   const items = new Array(commentsAmount).fill('');
@@ -86,7 +94,11 @@ function createCommentsArray() {
 }
 // 2. ИТОГО. Создаем готовый объект с заданной структурой
 
-//2.1 Функция собирает образец объекта
+/**
+ *2.1 Функция собирает образец объекта
+ * @param {number} id
+ * @returns {Picture}
+ */
 function createPhoto(id) {
   const url = (`photos/${id}.jpg`);
   const description = getRandomValueFromArray(DESCRIPTIONS);
@@ -97,9 +109,13 @@ function createPhoto(id) {
 }
 
 //2.2
-//Функция создает 25 вариантов собранного образца
 // const createPhotoArray = (length = 20) => Array.from({ length }, createPhoto);
 //Новый крутейший способ с помощью new Array  и дальнейшего map
+/**
+ * Функция создает 25 вариантов собранного образца
+ * @param {number} length
+ * @returns {Array<Picture>}
+ */
 function createPhotoArray(length = 25) {
   const items = new Array(length).fill(1);
   return items.map((value, index) => createPhoto(index + value));
