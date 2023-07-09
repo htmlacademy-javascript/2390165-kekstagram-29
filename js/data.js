@@ -62,7 +62,7 @@ const AUTHOR_COMMENTS_NAMES = [
 /*
 img/avatar-{{случайное число от 1 до 6}}.svg.
 Аватарки подготовлены в директории img.*/
-const createAvatarDir = () => (`img/avatar${getRandomInteger(1, 6)}.svg`);
+const createAvatarDir = () => (`img/avatar-${getRandomInteger(1, 6)}.svg`);
 
 // 1. СБОРКА ОБЪЕКТА КОММЕНТОВ
 const createCommetnsId = createIdGenerator();
