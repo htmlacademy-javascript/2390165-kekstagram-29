@@ -6,10 +6,10 @@ import './pristine-validators.js';
  */
 const form = document.querySelector('.img-upload__form');
 
-//@ts-ignore
-const prisine = new Pristine(form, {
+// @ts-ignore
+const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
-  errorTextParent: 'img-upload__field-wrapper'
+  errorTextParent: 'img-upload__field-wrapper',
 });
 
 form.addEventListener('change', onFormChange);
@@ -17,7 +17,7 @@ form.addEventListener('hide', onFormHide, true);
 form.addEventListener('reset', onFormReset);
 
 /**
- * @param {Event & {target:HTMLInputElement}} event
+ * @param {Event & {target: HTMLInputElement}} event
  */
 function onFormChange(event) {
   if (event.target.matches('#upload-file')) {
@@ -26,6 +26,7 @@ function onFormChange(event) {
     renderPopup(data);
   }
 }
+renderPopup();
 
 function onFormHide() {
   form.reset();
