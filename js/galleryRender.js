@@ -1,4 +1,4 @@
-import { renderPopup } from './popup.js';
+import { renderPopup } from './gallery-popup.js';
 
 /**
  * Заготовка для одного элемента миниатюры в галереи
