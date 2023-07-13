@@ -18,11 +18,11 @@ function showPopup(popup) {
 function hidePopup(popup) {
   popup.classList.add('hidden');
   popup.removeEventListener('click', onCancelButtonClick);
+  popup.dispatchEvent(new Event('hide'));
 
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
 
-  popup.dispatchEvent(new Event('hide'));
 }
 
 /**
