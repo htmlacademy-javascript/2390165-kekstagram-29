@@ -24,6 +24,7 @@ let showNextFiveComments = '';
 /**
  * Отрисовывает комментарии
  * @param  {Array<PictureComment>} data
+ * @param {number} step
  */
 function renderComments(data, step = 5) {
   const commentsList = popup.querySelector('.social__comments');

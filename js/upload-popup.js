@@ -1,11 +1,10 @@
-import initEffectSlider from './effect-slider.js';
-import { showPopup } from './popup.js';
+import {showPopup} from './popup.js';
 import initScaleControl from './scale-control.js';
-
+import initEffectSlider from './effect-slider.js';
 
 const popup = document.querySelector('.img-upload__overlay');
 const preview = popup.querySelector('img');
-const scaleControl = initScaleControl(popup.querySelector('.scale'), { max: 200 });
+const scaleControl = initScaleControl(popup.querySelector('.scale'));
 const effectSlider = initEffectSlider(popup.querySelector('.effect-level'));
 const effectPicker = popup.querySelector('.effects');
 
@@ -17,7 +16,7 @@ function renderPopup(data) {
   void data;
 
   scaleControl.on('update', onScaleControlUpdate);
-  scaleControl.setValue(100); // выставили умолчание при открытии окна
+  scaleControl.setValue(100);
 
   effectSlider.on('update', onEffectSliderUpdate);
   effectSlider.setEffect('none');
@@ -29,8 +28,8 @@ function renderPopup(data) {
 
 function onScaleControlUpdate() {
   const percent = scaleControl.getValue();
-
   const ratio = percent / 100;
+
   preview.style.setProperty('transform', `scale(${ratio})`);
 }
 
@@ -41,4 +40,5 @@ function onEffectSliderUpdate() {
 function onEffectPickerChange(event) {
   effectSlider.setEffect(event.target.getAttribute('value'));
 }
+
 export default renderPopup;

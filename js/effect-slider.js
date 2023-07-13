@@ -3,14 +3,14 @@
  * @returns {EffectSlider}
  */
 function initEffectSlider(target) {
-  //@ts-ignore
+  // @ts-ignore
   const slider = noUiSlider.create(target.querySelector('div'), createOptions());
   const level = target.querySelector('input');
 
   slider.on('update', onSliderUpdate);
 
   function onSliderUpdate() {
-    level.setAttribute('value', slider.get(true)); // с пар тру числовое значение (не форматирование)
+    level.setAttribute('value', slider.get(true));
   }
 
   /**
@@ -19,68 +19,67 @@ function initEffectSlider(target) {
   function setEffect(type) {
     slider.updateOptions(createOptions(type));
     target.classList.toggle('hidden', type === 'none');
-    }
+  }
 
   /**
- * @returns {string}
- */
+   * @returns {string}
+   */
   function getCssValue() {
     return slider.get();
   }
 
   /**
-  * @param {string} type
-  * @param {() => void} listener
-  */
+   * @param {string} type
+   * @param {() => void} listener
+   */
   function on(type, listener) {
     slider.on(type, listener);
   }
 
-
-
-  return { setEffect, getCssValue, on };
+  return {setEffect, getCssValue, on};
 }
 
 /**
  * @param {EffectType} type
- */ //передаем в Фх эффект, получаем настройки
+ */
 function createOptions(type = 'none') {
   /**
    * @type {Record<EffectType, Array<number>>}
    */
   const effectRangeMap = {
     none: [0, 100, 1],
-    chrome: [0, 1, 0.1],
-    sepia: [0, 1, 0.1],
+    chrome: [0, 1, .1],
+    sepia: [0, 1, .1],
     marvin: [0, 100, 1],
-    phobos: [0, 3, 0.1],
-    heat: [1, 3, 0.1],
+    phobos: [0, 3, .1],
+    heat: [1, 3, .1]
   };
 
   /**
-  * @type {Record<EffectType, (value: number) => string>}
-  */
-  const effectFormatterMap = { // ассоциативы в значениях не массивы а стрелки
+   * @type {Record<EffectType, (value: number) => string>}
+   */
+  const effectFormatterMap = {
     none: () => '',
     chrome: (value) => `grayscale(${value})`,
     sepia: (value) => `sepia(${value})`,
     marvin: (value) => `invert(${value}%)`,
     phobos: (value) => `blur(${value}px)`,
-    heat: (value) => `brigthness(${value})`,
+    heat: (value) => `brightness(${value})`
   };
-  const [min, max, step] = effectRangeMap[type]; // в type прилетит снаружи параметр ф
-  const format = { // ключи ниже это спецификация слайдера
+
+  const [min, max, step] = effectRangeMap[type];
+  const format = {
     to: effectFormatterMap[type],
     from: Number
   };
 
-  return { // ключи ниже это спецификация слайдера, который ждет вот именно такие ключи
-    range: { min, max },
+  return {
+    range: {min, max},
     step,
     start: max,
     format,
-    behaviour: 'snap',  //ползунок перескочит в желтую область //все эти настройки перечислены в документации
-    connect: 'lower',  //есть желтая послоска
+    behaviour: 'snap',
+    connect: 'lower'
   };
 }
 

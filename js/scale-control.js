@@ -5,17 +5,17 @@
  */
 function initScaleControl(target, options = {}) {
   const input = target.querySelector('input');
-  const [downButton, upButton] = target.querySelectorAll('button');
-  const { min = 25, max = 100, step = 25 } = options;
+  const [stepDownButton, stepUpButton] = target.querySelectorAll('button');
+  const {min = 25, max = 100, step = 25} = options;
 
-  downButton.addEventListener('click', onDownButtonClick);
-  upButton.addEventListener('click', onUpButtonClick);
+  stepDownButton.addEventListener('click', onStepDownButtonClick);
+  stepUpButton.addEventListener('click', onStepUpButtonClick);
 
-  function onDownButtonClick() {
+  function onStepDownButtonClick() {
     setValue(getValue() - step);
   }
 
-  function onUpButtonClick() {
+  function onStepUpButtonClick() {
     setValue(getValue() + step);
   }
 
@@ -37,16 +37,15 @@ function initScaleControl(target, options = {}) {
     input.dispatchEvent(new Event('update'));
   }
 
-   /**
+  /**
    * @param {string} type
    * @param {EventListener} listener
    */
-   function on(type, listener) {
+  function on(type, listener) {
     input.addEventListener(type, listener);
   }
 
   return {getValue, setValue, on};
 }
-
 
 export default initScaleControl;
