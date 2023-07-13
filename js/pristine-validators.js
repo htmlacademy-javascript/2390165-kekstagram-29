@@ -2,7 +2,7 @@ addValidator('word-pattern', (value, pattern) => {
   const words = segmentWords(value);
   const regexp = new RegExp(`^${pattern}$`, 'i');
 
-  return words.every((word) => regexp.test(word));
+  return words.every((it) => regexp.test(it));
 });
 
 addValidator('unique-words', (value) => {
@@ -12,24 +12,24 @@ addValidator('unique-words', (value) => {
   return words.length === wordSet.size;
 });
 
-addValidator('word-maxlength', (value, limit) => {
-  const words = segmentWords(value);
-  const maxlength = Number(limit);
-
-  return words.every((word) => word.length <= maxlength);
-});
-
 addValidator('max-words', (value, limit) => {
   const words = segmentWords(value);
-  const maxlength = Number(limit);
+  const maxLength = Number(limit);
 
-  return words.length <= maxlength;
+  return words.length <= maxLength;
 });
+
+addValidator('word-maxlength', (value, limit) => {
+  const words = segmentWords(value);
+  const maxLength = Number(limit);
+
+  return words.every((it) => it.length <= maxLength);
+});
+
 /**
  * @param {string} name
  * @param {(...args: Array<string>) => boolean} validator
  */
-
 function addValidator(name, validator) {
   // @ts-ignore
   Pristine.addValidator(name, validator, null, 1, true);
