@@ -14,10 +14,10 @@ function renderPopup(data) {
   popup.querySelector('.likes-count').textContent = String(data.likes);
   popup.querySelector('.social__caption').textContent = String(data.description);
 
-  showPopup(popup);
   renderComments(data.comments);
 
   popup.addEventListener('click', onPopupClick);
+  showPopup(popup);
 }
 
 let showNextFiveComments = '';
@@ -32,7 +32,7 @@ function renderComments(data, step = 5) {
   //Счетчики комментов
   const [shownComments, totalComments] = popup.querySelectorAll('.comments-count');
   const totalCommentsCount = data.length;
-  totalComments.textContent = totalCommentsCount;
+  totalComments.textContent = String(totalCommentsCount);
   data = structuredClone(data);
 
   showNextComments();
@@ -42,22 +42,12 @@ function renderComments(data, step = 5) {
   function showNextComments() {
     commentsList.append(...data.splice(0, step).map(createComment));
 
-    let restCommentsNumber = data.length;
-    shownComments.textContent = totalCommentsCount - restCommentsNumber;
-
+    const restCommentsNumber = data.length;
+    shownComments.textContent = String(totalCommentsCount - restCommentsNumber);
     moreLoaderButton.classList.toggle('hidden', data.length === 0);
   }
   showNextFiveComments = showNextComments;
-
-  moreLoaderButton.addEventListener('click', onMoreButtonClick);
 }
-
-// /**
-//  * Обработчик клика на кнопке "Загрузить еще". Показывает следующие пять комментов
-//  */
-// function onMoreButtonClick() {
-//   showNextFiveComments();
-// }
 
 /**
  * Создает один html элемент с комментарием
