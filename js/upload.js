@@ -88,3 +88,4 @@ function setSubmitBlocking(flag) {
 function resetFormAndHidePopup() {
   form['upload-cancel'].click();
 }
+
