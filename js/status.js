@@ -1,7 +1,8 @@
 /**
  * @param {StatusType} type
+ * @param {StatusOptions} options
  */
-function renderStatus(type) {
+function renderStatus(type, options = {}) {
   /**
    * @type {HTMLTemplateElement}
    */
@@ -9,6 +10,11 @@ function renderStatus(type) {
   const status = /** @type {Element} */ (
     statusTemplate.content.querySelector(`.${type}`).cloneNode(true)
   );
+
+  Object.keys(options).forEach((key) => {
+    status.querySelector(`.${type}__${key}`).textContent = options[key];
+  });
+
   showStatus(status);
 }
 

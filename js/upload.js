@@ -25,8 +25,18 @@ form.addEventListener('submit', onFormSubmit);
 function onFormChange(event) {
   if (event.target.matches('#upload-file')) {
     const [data] = event.target.files;
+    const types = event.target.getAttribute('accept').split(', ');
 
-    renderPopup(data);
+    if (types.some((it) => data.name.endsWith(it))) {
+      renderPopup(data);
+
+    } else {
+      const title = 'Неподдерживаемый формат';
+      const button = 'Попробовать другой';
+
+      renderStatus('error', {title, button});
+      form.reset();
+    }
   }
 }
 

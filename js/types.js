@@ -43,3 +43,9 @@
 /**
  * @typedef {'success' | 'error'} StatusType
  */
+
+/**
+ * @typedef StatusOptions
+ * @prop {string} [title]
+ * @prop {string} [button]
+ */
