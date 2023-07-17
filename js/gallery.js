@@ -1,17 +1,49 @@
 import { renderPopup } from './gallery-popup.js';
-
 /**
  * Заготовка для одного элемента миниатюры в галереи
  * @type {HTMLTemplateElement}
  */
 const pictureTemplate = document.querySelector('#picture');
 const gallery = document.querySelector('.pictures');
+const menu = document.querySelector('.img-filters');
+
+/**
+ * @param {Array<Picture>} data
+ */
+function initGallery(data) {
+  menu.classList.remove('img-filters--inactive');
+  menu.addEventListener('click', onMenuClick);
+  renderThumbnails(data);
+}
+
+/**
+ * @param {MouseEvent & {target: Element}} event
+ */
+function onMenuClick(event) {
+  const selectedButton = event.target.closest('button');
+
+  if (selectedButton) {
+    menu.querySelectorAll('button').forEach((button) => {
+      button.classList.toggle('img-filters__button--active', button === selectedButton);
+    });
+    selectedButton.dispatchEvent(new Event('toggle'));
+  }
+}
+
+/**
+ * Отрисовывает галерею миниатюрами
+ * @param {Array<Picture>} data
+ */
+function renderThumbnails(data) {
+  gallery.append(...data.map(createThumbnail));
+}
+
 /**
  * Клонирует template, настраивает поля
  * @param {Picture} data
  * @returns {HTMLAnchorElement}
  */
-function createPicture(data) {
+function createThumbnail(data) {
   const pictureClone =
     pictureTemplate.content.querySelector('.picture').cloneNode(true);
   const picturePhoto = pictureClone.querySelector('.picture__img');
@@ -23,8 +55,6 @@ function createPicture(data) {
   pictureLikes.textContent = String(data.likes);
   pictureComments.textContent = String(data.comments.length);
 
-  // кладу в миниатюру методы
-  // обработчик клика на эту картинку
   pictureClone.addEventListener('click', (event) => {
     event.preventDefault();
     renderPopup(data);
@@ -33,30 +63,8 @@ function createPicture(data) {
   return pictureClone;
 }
 
-// function renderGallery(items) {
-//   for (let i = 0; i < items.length; i++) {
-//     const item = items[i];
-//     const galleryPicture = createPicture(item);
-//     gallery.append(galleryPicture);
-//   }
-// }
 
-// Современный способ БЕЗ for:
-/**
- * Отрисовывает галерею миниатюрами
- * @param {Array<Picture>} data
- */
-function renderGallery(data) {
-  //максималити продвинуто в одну строку:
-  gallery.append(...data.map(createPicture));
 
-  //немного проще и немного понятнее:
-  // gallery.append(...data.map((value) => createPicture(value)));
-
-  //еще проще и еще понятнее:
-  // const refinedPicture = data.map((value) => createPicture(value));
-  // gallery.append(...refinedPicture);
-}
-
-export { renderGallery };
+export default initGallery;
+// export { renderThumbnails as renderGallery };
 
