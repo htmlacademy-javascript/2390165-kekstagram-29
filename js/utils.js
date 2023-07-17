@@ -12,27 +12,31 @@ async function request(url, options) {
   return response.json();
 }
 
-
-function debounce(callback, timeoutDelay = 500) {
+/**
+ * @template {Function} T
+ * @param {T} callback
+ * @param {number} delay
+ * @returns {T}
+ */
+function throttle(callback, delay = 500) {
   let timeoutId;
-  return (...rest) => {
+  let lastCallTime;
+
+  // @ts-ignore
+  return (...args) => {
+    const elapsedTime = Date.now() - lastCallTime;
+    const newDelay = Math.max(delay - elapsedTime, 0);
+
     clearTimeout(timeoutId);
-    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+
+    timeoutId = setTimeout(() => {
+      callback(...args);
+      lastCallTime = Date.now();
+    }, newDelay);
   };
 }
 
-function throttle(callback, delayBetweenFrames) {
-  let lastTime = 0;
-  return (...rest) => {
-    const now = new Date();
-    if (now - lastTime >= delayBetweenFrames) {
-      callback.apply(this, rest);
-      lastTime = now;
-    }
-  };
-}
 export {
   request,
-  debounce,
   throttle
 };

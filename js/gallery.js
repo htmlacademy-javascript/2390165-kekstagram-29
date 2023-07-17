@@ -1,4 +1,6 @@
 import { renderPopup } from './gallery-popup.js';
+import { throttle } from './utils.js';
+
 /**
  * Заготовка для одного элемента миниатюры в галереи
  * @type {HTMLTemplateElement}
@@ -16,12 +18,12 @@ function initGallery(data) {
   menu.classList.remove('img-filters--inactive');
   menu.addEventListener('click', onMenuClick);
 
-  menu.addEventListener('toggle', (event) => {
+  menu.addEventListener('toggle', throttle((event) => {
     const selectedButton = /** @type {HTMLButtonElement}*/ (event.target);
     const selectedValue = /** @type {FilterType}*/ (selectedButton.getAttribute('value'));
 
     renderThumbnails(filter(selectedValue));
-  }, true);
+  }), true);
 
   renderThumbnails(data);
 }
