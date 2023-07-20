@@ -1,4 +1,4 @@
-import {showPopup} from './popup.js';
+import { showPopup } from './popup.js';
 import initScaleControl from './scale-control.js';
 import initEffectSlider from './effect-slider.js';
 
@@ -12,8 +12,7 @@ const effectPicker = popup.querySelector('.effects');
  * @param {File} data
  */
 function renderPopup(data) {
-  // TODO: Подстановка изображения
-  void data;
+  setPreviewUrl(URL.createObjectURL(data));
 
   scaleControl.on('update', onScaleControlUpdate);
   scaleControl.setValue(100);
@@ -24,6 +23,17 @@ function renderPopup(data) {
   effectPicker.addEventListener('change', onEffectPickerChange);
 
   showPopup(popup);
+}
+
+/**
+ * @param {string} url
+ */
+function setPreviewUrl(url) {
+  preview.setAttribute('src', url);
+
+  effectPicker.querySelectorAll('span').forEach((it) => {
+    it.style.setProperty('background-image', `url(${url})`);
+  });
 }
 
 function onScaleControlUpdate() {
