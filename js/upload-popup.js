@@ -1,4 +1,4 @@
-import { showPopup } from './popup.js';
+import {showPopup} from './popup.js';
 import initScaleControl from './scale-control.js';
 import initEffectSlider from './effect-slider.js';
 

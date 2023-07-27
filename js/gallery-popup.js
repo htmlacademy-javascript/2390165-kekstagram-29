@@ -1,69 +1,62 @@
 import {showPopup} from './popup.js';
 
 const popup = document.querySelector('.big-picture');
-const commentElementTemplate = popup.querySelector('.social__comment');
-const moreLoaderButton = popup.querySelector('.social__comments-loader');
-
+const commentTemplate = popup.querySelector('.social__comment');
 
 /**
- * Отрисовывает большую картинку (popup)
+ * @type {ReturnType<createCommentsRenderer>}
+ */
+let renderNextComments;
+
+/**
  * @param {Picture} data
  */
 function renderPopup(data) {
   popup.querySelector('.big-picture__img img').setAttribute('src', data.url);
+  popup.querySelector('.social__caption').textContent = data.description;
   popup.querySelector('.likes-count').textContent = String(data.likes);
-  popup.querySelector('.social__caption').textContent = String(data.description);
 
-  renderComments(data.comments);
-
+  renderNextComments = createCommentsRenderer(data.comments);
+  renderNextComments();
   popup.addEventListener('click', onPopupClick);
+
   showPopup(popup);
 }
 
-let showNextFiveComments = '';
 /**
- * Отрисовывает комментарии
- * @param  {Array<PictureComment>} data
+ * @param {Array<PictureComment>} data
  * @param {number} step
+ * @returns {() => void}
  */
-function renderComments(data, step = 5) {
-  const commentsList = popup.querySelector('.social__comments');
-  commentsList.innerHTML = '';
+function createCommentsRenderer(data, step = 5) {
+  const discussion = popup.querySelector('.social__comments');
+  const moreButton = popup.querySelector('.comments-loader');
+  const [shownCount, totalCount] = popup.querySelectorAll('.comments-count');
+  const commentsTotal = data.length;
 
-  //Счетчики комментов
-  const [shownComments, totalComments] = popup.querySelectorAll('.comments-count');
-  const totalCommentsCount = data.length;
-  totalComments.textContent = String(totalCommentsCount);
   data = structuredClone(data);
+  discussion.textContent = '';
+  totalCount.textContent = String(commentsTotal);
 
-  showNextComments();
-  /**
- * Отрисовывает 5 комментариев
-*/
-  function showNextComments() {
-    commentsList.append(...data.splice(0, step).map(createComment));
-
-    const restCommentsNumber = data.length;
-    shownComments.textContent = String(totalCommentsCount - restCommentsNumber);
-    moreLoaderButton.classList.toggle('hidden', data.length === 0);
-  }
-  showNextFiveComments = showNextComments;
+  return () => {
+    discussion.append(...data.splice(0, step).map(createComment));
+    moreButton.classList.toggle('hidden', data.length === 0);
+    shownCount.textContent = String(commentsTotal - data.length);
+  };
 }
 
 /**
- * Создает один html элемент с комментарием
  * @param {PictureComment} data
  * @returns {HTMLLIElement}
-*/
+ */
 function createComment(data) {
-  const commentElement = /** @type {HTMLLIElement}*/ (commentElementTemplate.cloneNode(true));
+  const comment = /** @type {HTMLLIElement} */ (commentTemplate.cloneNode(true));
 
-  commentElement.querySelector('.social__picture').setAttribute('src', data.avatar);
-  commentElement.querySelector('.social__picture').setAttribute('alt', data.name);
-  commentElement.querySelector('.social__text').textContent = data.message;
+  comment.querySelector('.social__picture').setAttribute('src', data.avatar);
+  comment.querySelector('.social__picture').setAttribute('alt', data.name);
+  comment.querySelector('.social__text').textContent = data.message;
 
-  return commentElement;
-
+  return comment;
 }
 
 /**
@@ -71,8 +64,8 @@ function createComment(data) {
  */
 function onPopupClick(event) {
   if (event.target.closest('.comments-loader')) {
-    showNextFiveComments();
+    renderNextComments();
   }
 }
 
-export {renderPopup};
+export default renderPopup;

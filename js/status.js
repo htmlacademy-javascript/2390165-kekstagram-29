@@ -23,16 +23,16 @@ function renderStatus(type, options = {}) {
  */
 function showStatus(status) {
   status.addEventListener('click', onStatusClick);
-  document.addEventListener('keydown', onDocumentKeydown, true);
   document.body.append(status);
+  document.addEventListener('keydown', onDocumentKeydown, true);
 }
 
 /**
  * @param {Element} status
  */
 function hideStatus(status) {
-  status.remove();
   status.removeEventListener('click', onStatusClick);
+  status.remove();
   document.removeEventListener('keydown', onDocumentKeydown, true);
 }
 
