@@ -1,6 +1,7 @@
 /**
  * @param {string} url
  * @param {RequestInit} [options]
+ * @returns {Promise}
  */
 async function request(url, options) {
   const response = await fetch(url, options);
@@ -36,7 +37,4 @@ function throttle(callback, delay = 500) {
   };
 }
 
-export {
-  request,
-  throttle
-};
+export {request, throttle};

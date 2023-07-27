@@ -1,6 +1,6 @@
 import renderPopup from './upload-popup.js';
 import './pristine-validators.js';
-import { request } from './utils.js';
+import {request} from './utils.js';
 import renderStatus from './status.js';
 
 /**
@@ -75,7 +75,7 @@ async function sendFormData() {
   const method = form.getAttribute('method');
   const body = new FormData(form);
 
-  await request(url, { method, body });
+  await request(url, {method, body});
 }
 
 /**
@@ -88,4 +88,3 @@ function setSubmitBlocking(flag) {
 function resetFormAndHidePopup() {
   form['upload-cancel'].click();
 }
-
