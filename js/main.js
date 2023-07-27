@@ -1,5 +1,5 @@
 // Модуль - точка входа
-import {renderGallery} from './gallery-render.js';
+import initGallery from './gallery.js';
 import renderStatus from './status.js';
 import './upload.js';
 import { request } from './utils.js';
@@ -10,7 +10,7 @@ try {
    */
   const data = await request('https://29.javascript.pages.academy/kekstagram/data');
 
-  renderGallery(data);
+  initGallery(data);
 
 } catch(error) {
   const title = `Ошибка: ${error.message}`;
