@@ -51,5 +51,5 @@
  */
 
 /**
- * @typedef {'default' | 'random' | 'discussed' } FilterType
+ * @typedef {'default' | 'random' | 'discussed'} FilterType
  */
